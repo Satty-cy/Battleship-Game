@@ -1,0 +1,34 @@
+void playMultiplayer() {
+    char grid[GRID_SIZE][GRID_SIZE];
+    initializeGrid(grid);
+    placeShips(grid);
+
+    int attempts = 10;
+    int shipsDestroyed = 0;
+
+    cout << "Multiplayer Battleship! Player 1 and Player 2 take turns.\n";
+
+    int currentPlayer = 1;
+    while (attempts > 0 && shipsDestroyed < SHIP_COUNT) {
+        displayGrid(grid);
+
+        cout << "Player " << currentPlayer << ", enter your attack coordinates: ";
+        int row, col;
+        cin >> row >> col;
+
+        if (grid[row][col] == 'S') {
+            cout << "Player " << currentPlayer << " hit a ship!\n";
+            grid[row][col] = 'X';
+            shipsDestroyed++;
+        } else {
+            cout << "Miss!\n";
+            grid[row][col] = 'O';
+        }
+
+        currentPlayer = (currentPlayer == 1) ? 2 : 1; // Switch turns
+        attempts--;
+    }
+
+    cout << "Game over! Here's the final grid:\n";
+    displayGrid(grid, true);
+}
